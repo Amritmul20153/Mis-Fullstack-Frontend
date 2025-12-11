@@ -1,0 +1,42 @@
+<h2 class="page-title">Medications</h2>
+
+<table class="table table-hover shadow-sm medication-table">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Form</th>
+    <th>Ingredients</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr *ngFor="let m of medications"
+      (click)="onSelect(m)"
+      class="table-row">
+
+    <td>{{ m.id }}</td>
+    <td>{{ m.form?.text || '-' }}</td>
+
+    <td>
+      <ng-container *ngFor="let ing of m.ingredient">
+        <span *ngFor="let c of ing.itemCodeableConcept?.coding"
+              class="pill">
+          {{ c.display }}
+        </span>
+      </ng-container>
+    </td>
+
+  </tr>
+  </tbody>
+</table>
+
+<button class="btn btn-lila mt-3" (click)="createMedication()">
+  + Neue Medication
+</button>
+
+<div *ngIf="selectedMedication" class="mt-4">
+  <app-medicationdetails
+    [medication]="selectedMedication"
+    (medicationModified)="onMedicationModified($event)">
+  </app-medicationdetails>
+</div>

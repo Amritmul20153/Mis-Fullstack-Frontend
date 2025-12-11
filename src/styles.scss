@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+/* Active navbar menu item red */
+.nav-item.active > .nav-link {
+  color: red !important;
+  font-weight: bold;
+}
+body {
+    background-color: #ffe6f0; /* ein sehr helles Rosa */
+}

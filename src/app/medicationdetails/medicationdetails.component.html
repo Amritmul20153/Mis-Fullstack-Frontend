@@ -1,0 +1,99 @@
+<div class="details-card">
+
+  <h3>Medication Details</h3>
+
+  <!-- STATUS -->
+  <div class="form-group">
+    <label>Status</label>
+    <select [(ngModel)]="medication.status" class="form-control w-25">
+      <option *ngFor="let s of statusOptions" [ngValue]="s">{{ s }}</option>
+    </select>
+  </div>
+
+  <!-- BATCH -->
+  <div class="form-group">
+    <label>Batch Lot Number</label>
+    <input class="form-control w-25" [(ngModel)]="medication.batch!.lotNumber">
+  </div>
+
+  <div class="form-group">
+    <label>Batch Expiration</label>
+    <input type="date" class="form-control w-25" [(ngModel)]="medication.batch!.expirationDate">
+  </div>
+
+  <!-- FORM -->
+  <div class="form-group">
+    <label>Form Text</label>
+    <input class="form-control w-25" [(ngModel)]="medication.form!.text">
+  </div>
+
+
+  <!-- INGREDIENTS -->
+  <h4 class="section-title mt-4">Ingredients</h4>
+
+  <div *ngFor="let ing of medication.ingredient; let i = index"
+       class="ingredient-block">
+
+    <h5>Zutat {{ i + 1 }}</h5>
+
+    <label>Display</label>
+    <input class="form-control"
+           [(ngModel)]="ing.itemCodeableConcept!.coding![0].display">
+
+    <label class="mt-2">System</label>
+    <input class="form-control"
+           [(ngModel)]="ing.itemCodeableConcept!.coding![0].system">
+
+    <label class="mt-2">Code</label>
+    <input class="form-control"
+           [(ngModel)]="ing.itemCodeableConcept!.coding![0].code">
+
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <h6>Numerator</h6>
+
+        <label>Value</label>
+        <input type="number" class="form-control"
+               [(ngModel)]="ing.strength!.numerator!.value">
+
+        <label class="mt-2">System</label>
+        <input class="form-control"
+               [(ngModel)]="ing.strength!.numerator!.system">
+
+        <label class="mt-2">Code</label>
+        <input class="form-control"
+               [(ngModel)]="ing.strength!.numerator!.code">
+      </div>
+
+      <div class="col-md-6">
+        <h6>Denominator</h6>
+
+        <label>Value</label>
+        <input type="number" class="form-control"
+               [(ngModel)]="ing.strength!.denominator!.value">
+
+        <label class="mt-2">System</label>
+        <input class="form-control"
+               [(ngModel)]="ing.strength!.denominator!.system">
+
+        <label class="mt-2">Code</label>
+        <input class="form-control"
+               [(ngModel)]="ing.strength!.denominator!.code">
+      </div>
+    </div>
+
+    <button class="btn btn-danger mt-3" (click)="removeIngredient(i)">
+      Zutat entfernen
+    </button>
+  </div>
+
+  <button class="btn btn-secondary mt-3" (click)="addIngredient()">
+    + Ingredient hinzufügen
+  </button>
+
+  <hr>
+
+  <button class="btn btn-primary" (click)="saveMedication()">Speichern</button>
+  <button class="btn btn-danger ms-2" (click)="deleteMedication()">Löschen</button>
+
+</div>

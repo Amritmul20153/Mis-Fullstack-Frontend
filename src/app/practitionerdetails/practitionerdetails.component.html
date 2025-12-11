@@ -1,0 +1,86 @@
+<ul class="list-group mb-4">
+  <li class="list-group-item"><strong>ID:</strong> {{ practitioner.id }}</li>
+
+  <li class="list-group-item">
+    <label class="form-check-label">
+      <input type="checkbox" class="form-check-input me-2" [(ngModel)]="practitioner.active" />
+      Active
+    </label>
+  </li>
+
+  <li class="list-group-item">
+    <label>Gender:
+      <select [(ngModel)]="practitioner.gender" class="form-select w-auto d-inline-block ms-2">
+        <option *ngFor="let g of genderOptions" [value]="g">{{ g }}</option>
+      </select>
+    </label>
+  </li>
+
+  <li class="list-group-item">
+    <label>Birth Date:
+      <input type="date" class="form-control w-auto d-inline-block ms-2" [(ngModel)]="practitioner.birthDate" />
+    </label>
+  </li>
+
+  <!-- Namen -->
+  <li class="list-group-item">
+    <h5>Namen</h5>
+    <button class="btn btn-sm btn-success mb-2" (click)="addName()">+ Name</button>
+    <div *ngFor="let name of practitioner.name" class="input-group mb-2">
+      <input type="text" class="form-control" placeholder="Name" [(ngModel)]="name.text" />
+      <button class="btn btn-danger btn-sm" (click)="deleteName(name)">Löschen</button>
+    </div>
+  </li>
+
+  <!-- Identifier -->
+  <li class="list-group-item">
+    <h5>Identifier</h5>
+    <div *ngFor="let id of practitioner.identifier" class="input-group mb-2">
+      <input type="text" class="form-control" [(ngModel)]="id.value" placeholder="Identifier" />
+    </div>
+    <button class="btn btn-sm btn-success" (click)="practitioner.identifier.push({ value: '' })">+ Identifier</button>
+  </li>
+
+  <!-- Telecom -->
+  <li class="list-group-item">
+    <h5>Telecom</h5>
+    <div *ngFor="let t of practitioner.telecom" class="input-group mb-2">
+      <input type="text" class="form-control me-1" [(ngModel)]="t.system" placeholder="System (z. B. phone/email)" />
+      <input type="text" class="form-control" [(ngModel)]="t.value" placeholder="Value" />
+    </div>
+    <button class="btn btn-sm btn-success" (click)="practitioner.telecom.push({ system: '', value: '' })">+ Telecom</button>
+  </li>
+
+  <!-- Address -->
+  <li class="list-group-item">
+    <h5>Address</h5>
+    <div *ngFor="let a of practitioner.address" class="mb-3">
+      <input type="text" class="form-control mb-1" [(ngModel)]="a.city" placeholder="City" />
+      <input type="text" class="form-control mb-1" [(ngModel)]="a.postalCode" placeholder="Postal Code" />
+      
+      <!-- Workaround für line[0] -->
+      <input type="text"
+             class="form-control mb-1"
+             [ngModel]="a.line ? a.line[0] : ''"
+             (ngModelChange)="a.line = [$event]"
+             placeholder="Street" />
+    </div>
+    <button class="btn btn-sm btn-success" (click)="practitioner.address.push({ city: '', postalCode: '', line: [''] })">+ Address</button>
+  </li>
+
+  <!-- Qualification -->
+  <li class="list-group-item">
+    <h5>Qualification</h5>
+    <div *ngFor="let q of practitioner.qualification" class="mb-3">
+      <input type="text" class="form-control mb-1" [(ngModel)]="q.code" placeholder="Qualification Code" />
+      <input type="text" class="form-control mb-1" [(ngModel)]="q.issuer" placeholder="Issuer" />
+    </div>
+    <button class="btn btn-sm btn-success" (click)="practitioner.qualification.push({ code: '', issuer: '' })">+ Qualification</button>
+  </li>
+</ul>
+
+<!-- Action buttons -->
+<div class="mb-5">
+  <button class="btn btn-danger me-2" (click)="deletePractitioner()">Löschen</button>
+  <button class="btn btn-warning" (click)="updatePractitioner()">Speichern</button>
+</div>

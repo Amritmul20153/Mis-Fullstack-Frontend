@@ -1,0 +1,31 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Gender</th>
+      <th>Birth Date</th>
+      <th>Active</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of patients" (click)="onSelect(p)" style="cursor: pointer;">
+      <td>{{ p.id }}</td>
+      <td>{{ p.name[0]?.text }}</td>
+      <td>{{ p.gender }}</td>
+      <td>{{ p.birthDate | date: 'yyyy-MM-dd' }}</td>
+      <td>{{ p.active ? 'Yes' : 'No' }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Neuer Patient anlegen -->
+<button class="btn btn-success mb-3" (click)="createPatient()">Neuen Patient anlegen</button>
+
+<!-- Patientendetails anzeigen und bearbeiten -->
+<div *ngIf="selectedPatient">
+  <app-patientdetails
+    [id]="selectedPatient.id"
+    (patientModified)="onPatientModified(true)">
+  </app-patientdetails>
+</div>

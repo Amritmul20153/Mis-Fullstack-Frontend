@@ -1,0 +1,56 @@
+<ul class="list-group mb-3">
+  <li class="list-group-item"><strong>ID:</strong> {{ patient.id }}</li>
+
+  <li class="list-group-item">
+    <label class="form-check-label">
+      <input type="checkbox" class="form-check-input me-2" [(ngModel)]="patient.active" />
+      Active
+    </label>
+  </li>
+
+  <li class="list-group-item">
+    <label>Gender:
+      <select class="form-select w-auto d-inline-block ms-2" [(ngModel)]="patient.gender">
+        <option *ngFor="let g of genderOptions" [value]="g">{{ g }}</option>
+      </select>
+    </label>
+  </li>
+
+  <li class="list-group-item">
+    <label>Birth Date:
+      <input type="date" class="form-control w-auto d-inline-block ms-2" [(ngModel)]="patient.birthDate" />
+    </label>
+  </li>
+
+  <li class="list-group-item">
+    <label>Deceased Boolean:
+      <input type="checkbox" class="form-check-input ms-2" [(ngModel)]="patient.deceasedBoolean" />
+    </label>
+  </li>
+
+  <li class="list-group-item">
+    <label>Multiple Birth Boolean:
+      <input type="checkbox" class="form-check-input ms-2" [(ngModel)]="patient.multipleBirthBoolean" />
+    </label>
+  </li>
+
+  <li class="list-group-item">
+    <label>Multiple Birth Integer:
+      <input type="number" class="form-control w-auto d-inline-block ms-2" [(ngModel)]="patient.multipleBirthInteger" />
+    </label>
+  </li>
+
+  <li class="list-group-item">
+    <h5>Names</h5>
+    <button class="btn btn-sm btn-success mb-2" (click)="addName()">+ Name</button>
+    <div *ngFor="let name of patient.name" class="input-group mb-2">
+      <input type="text" class="form-control" [(ngModel)]="name.text" placeholder="Name" />
+      <button class="btn btn-danger btn-sm" (click)="deleteName(name)">Löschen</button>
+    </div>
+  </li>
+</ul>
+
+<div class="mb-3">
+  <button class="btn btn-danger me-2" (click)="deletePatient()">Löschen</button>
+  <button class="btn btn-primary" (click)="savePatient()">Speichern</button>
+</div>

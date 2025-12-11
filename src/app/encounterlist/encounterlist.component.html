@@ -1,0 +1,37 @@
+<table class="table table-bordered table-hover">
+  <thead class="table-light">
+    <tr>
+      <th>ID</th>
+      <th>Status</th>
+      <th>Geplanter Start</th>
+      <th>Geplantes Ende</th>
+      <th>Priority</th>
+      <th>Service Provider</th>
+      <th>Identifier</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let e of encounterList" (click)="selectEncounter(e)" style="cursor: pointer;">
+      <td>{{ e.id }}</td>
+      <td>{{ e.encounterStatus }}</td>
+      <td>{{ e.plannedStartDate | date:'yyyy-MM-dd HH:mm' }}</td>
+      <td>{{ e.plannedEndDate | date:'yyyy-MM-dd HH:mm' }}</td>
+      <td>{{ e.priority.text }}</td>
+      <td>{{ e.serviceProvider.display }}</td>
+      <td>
+        <div *ngFor="let id of e.identifier">
+          {{ id.value }}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<button class="btn btn-success my-3" (click)="createEncounter()">Neuen Encounter anlegen</button>
+
+<div *ngIf="selectedEncounter?.id">
+  <app-encounterdetails
+    [id]="selectedEncounter.id"
+    (encounterModified)="onEncounterModified(true)">
+  </app-encounterdetails>
+</div>

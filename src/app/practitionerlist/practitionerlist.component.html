@@ -1,0 +1,63 @@
+<table class="table table-bordered table-hover">
+  <thead class="table-light">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Gender</th>
+      <th>Birth Date</th>
+      <th>Active</th>
+      <th>Identifier</th>
+      <th>Telecom</th>
+      <th>Address</th>
+      <th>Qualification</th>
+      <th>Photo URL(s)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of practitionerList" (click)="selectPractitioner(p)" style="cursor: pointer;">
+      <td>{{ p.id }}</td>
+      <td>
+        <div *ngFor="let name of p.name">
+          {{ name.text }} {{ name.family }}
+        </div>
+      </td>
+      <td>{{ p.gender }}</td>
+      <td>{{ p.birthDate | date:'yyyy-MM-dd' }}</td>
+      <td>{{ p.active ? 'Yes' : 'No' }}</td>
+      <td>
+        <div *ngFor="let id of p.identifier">
+          {{ id.value }}
+        </div>
+      </td>
+      <td>
+        <div *ngFor="let t of p.telecom">
+          {{ t.system }}: {{ t.value }}
+        </div>
+      </td>
+      <td>
+        <div *ngFor="let a of p.address">
+          {{ a.line?.join(', ') }}, {{ a.postalCode }} {{ a.city }}
+        </div>
+      </td>
+      <td>
+        <div *ngFor="let q of p.qualification">
+          {{ q.code }} ({{ q.issuer }})
+        </div>
+      </td>
+      <td>
+        <div *ngFor="let photo of p.photo">
+          {{ photo.url }}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<button class="btn btn-success my-3" (click)="createPractitioner()">Neuen Practitioner anlegen</button>
+
+<div *ngIf="selectedPractitioner?.id">
+  <app-practitionerdetails
+    [id]="selectedPractitioner.id"
+    (practitionerModified)="onPractitionerModified(true)">
+  </app-practitionerdetails>
+</div>
