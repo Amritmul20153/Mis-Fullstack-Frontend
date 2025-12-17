@@ -13,13 +13,18 @@ export class DataService {
 
   constructor(private http: HttpClient) {}
 
-  
-  //                         PATIENT
-  
+  // PATIENT
   private patientUrl = 'http://localhost:8080/api/patient/';
 
+  // ← ALTE Methode (Kompatibilität)
   getPatients(): Observable<Patient[]> {
     return this.http.get<Patient[]>(this.patientUrl);
+  }
+
+  // ← NEU: FHIR Suche + Pagination
+  getPatientsWithSearch(params: string = ''): Observable<any> {
+    const url = params ? `${this.patientUrl}?${params}` : this.patientUrl;
+    return this.http.get<any>(url);
   }
 
   getPatient(id: string): Observable<Patient> {
@@ -29,7 +34,6 @@ export class DataService {
   addPatient(patient: Patient): Observable<Patient> {
     return this.http.post<Patient>(this.patientUrl, patient);
   }
-
 
   createPatient(patient: Patient): Observable<Patient> {
     return this.http.post<Patient>(this.patientUrl, patient);
@@ -43,14 +47,17 @@ export class DataService {
     return this.http.delete(this.patientUrl + id);
   }
 
-
-  //                         PRACTITIONER
-  
-
+  // PRACTITIONER
   private practitionerUrl = 'http://localhost:8080/api/practitioner/';
 
   getPractitioners(): Observable<Practitioner[]> {
     return this.http.get<Practitioner[]>(this.practitionerUrl);
+  }
+
+  // ← NEU: Auch für Practitioner
+  getPractitionersWithSearch(params: string = ''): Observable<any> {
+    const url = params ? `${this.practitionerUrl}?${params}` : this.practitionerUrl;
+    return this.http.get<any>(url);
   }
 
   getPractitioner(id: string): Observable<Practitioner> {
@@ -69,10 +76,7 @@ export class DataService {
     return this.http.delete(this.practitionerUrl + id);
   }
 
-
- 
-  //                         ENCOUNTER
-  
+  // ENCOUNTER
   private encounterUrl = 'http://localhost:8080/api/encounters/';
 
   getEncounters(): Observable<Encounter[]> {
@@ -99,9 +103,7 @@ export class DataService {
     return this.http.put<Encounter>(this.encounterUrl + encounter.id, encounter);
   }
 
-  //                         MEDICATION
-  
-
+  // MEDICATION
   private medicationUrl = "http://localhost:8080/api/medication";
 
   getMedications(): Observable<Medication[]> {
@@ -123,5 +125,4 @@ export class DataService {
   deleteMedication(id: string): Observable<any> {
     return this.http.delete(`${this.medicationUrl}/${id}`);
   }
-
 }

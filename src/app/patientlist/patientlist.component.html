@@ -1,3 +1,37 @@
+<!--- SUCHFORMULAR (OBEN) --->
+<div class="search-form mb-4 p-4 border rounded bg-light">
+  <div class="row g-3">
+    <div class="col-md-3">
+      <input class="form-control" 
+             [(ngModel)]="searchParams.family" 
+             placeholder="Family Name" />
+    </div>
+    <div class="col-md-2">
+      <select class="form-control" [(ngModel)]="searchParams.gender">
+        <option value="">Alle</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <select class="form-control" [(ngModel)]="searchParams._count">
+        <option value="10">10/Seite</option>
+        <option value="25">25/Seite</option>
+        <option value="50">50/Seite</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <input class="form-control" [(ngModel)]="searchParams._page" placeholder="Seite" />
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-primary w-100" (click)="searchPatients()">
+        🔍 Suchen
+      </button>
+    </div>
+  </div>
+</div>
+
+<!--- DEINE BESTEHENDE TABELLE --->
 <table class="table">
   <thead>
     <tr>
@@ -19,8 +53,26 @@
   </tbody>
 </table>
 
+<!--- PAGINATION (KORRIGIERT) --->
+<div class="pagination mt-4 p-3 border rounded bg-light text-center">
+  <div class="row align-items-center">
+    <div class="col-md-6">
+      <strong>Total: {{ total }} Patienten</strong> | 
+      Seite {{ searchParams._page }}
+    </div>
+    <div class="col-md-6 text-end">
+      <button class="btn btn-outline-primary me-2" (click)="prevPage()" [disabled]="searchParams._page === '1'">
+        ← Vorherige
+      </button>
+      <button class="btn btn-primary" (click)="nextPage()" [disabled]="patients.length === 0">
+        Nächste →
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- Neuer Patient anlegen -->
-<button class="btn btn-success mb-3" (click)="createPatient()">Neuen Patient anlegen</button>
+<button class="btn btn-success mb-3 mt-3" (click)="createPatient()">Neuen Patient anlegen</button>
 
 <!-- Patientendetails anzeigen und bearbeiten -->
 <div *ngIf="selectedPatient">
