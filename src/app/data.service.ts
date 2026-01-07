@@ -13,22 +13,28 @@ export class DataService {
 
   constructor(private http: HttpClient) {}
 
-  // PATIENT
-  private patientUrl = 'http://localhost:8080/api/patient/';
+  // =========================
+  // BASE URL
+  // =========================
+  private readonly baseUrl = 'http://localhost:8080/api';
 
-  // ← ALTE Methode (Kompatibilität)
+  // =========================
+  // PATIENT
+  // =========================
+  private readonly patientUrl = `${this.baseUrl}/patient`;
+
   getPatients(): Observable<Patient[]> {
     return this.http.get<Patient[]>(this.patientUrl);
   }
 
-  // ← NEU: FHIR Suche + Pagination
+  // ✅ FIX: KEIN Slash vor ?
   getPatientsWithSearch(params: string = ''): Observable<any> {
     const url = params ? `${this.patientUrl}?${params}` : this.patientUrl;
     return this.http.get<any>(url);
   }
 
   getPatient(id: string): Observable<Patient> {
-    return this.http.get<Patient>(this.patientUrl + id);
+    return this.http.get<Patient>(`${this.patientUrl}/${id}`);
   }
 
   addPatient(patient: Patient): Observable<Patient> {
@@ -40,28 +46,29 @@ export class DataService {
   }
 
   updatePatient(patient: Patient): Observable<Patient> {
-    return this.http.put<Patient>(this.patientUrl + patient.id, patient);
+    return this.http.put<Patient>(`${this.patientUrl}/${patient.id}`, patient);
   }
 
   deletePatient(id: string): Observable<any> {
-    return this.http.delete(this.patientUrl + id);
+    return this.http.delete(`${this.patientUrl}/${id}`);
   }
 
+  // =========================
   // PRACTITIONER
-  private practitionerUrl = 'http://localhost:8080/api/practitioner/';
+  // =========================
+  private readonly practitionerUrl = `${this.baseUrl}/practitioner`;
 
   getPractitioners(): Observable<Practitioner[]> {
     return this.http.get<Practitioner[]>(this.practitionerUrl);
   }
 
-  // ← NEU: Auch für Practitioner
   getPractitionersWithSearch(params: string = ''): Observable<any> {
     const url = params ? `${this.practitionerUrl}?${params}` : this.practitionerUrl;
     return this.http.get<any>(url);
   }
 
   getPractitioner(id: string): Observable<Practitioner> {
-    return this.http.get<Practitioner>(this.practitionerUrl + id);
+    return this.http.get<Practitioner>(`${this.practitionerUrl}/${id}`);
   }
 
   addPractitioner(practitioner: Practitioner): Observable<Practitioner> {
@@ -69,30 +76,28 @@ export class DataService {
   }
 
   updatePractitioner(practitioner: Practitioner): Observable<Practitioner> {
-    return this.http.put<Practitioner>(this.practitionerUrl + practitioner.id, practitioner);
+    return this.http.put<Practitioner>(`${this.practitionerUrl}/${practitioner.id}`, practitioner);
   }
 
   deletePractitioner(id: string): Observable<any> {
-    return this.http.delete(this.practitionerUrl + id);
+    return this.http.delete(`${this.practitionerUrl}/${id}`);
   }
 
+  // =========================
   // ENCOUNTER
-  private encounterUrl = 'http://localhost:8080/api/encounters/';
+  // =========================
+  private readonly encounterUrl = `${this.baseUrl}/encounters`;
 
   getEncounters(): Observable<Encounter[]> {
     return this.http.get<Encounter[]>(this.encounterUrl);
   }
 
   getEncounter(id: string): Observable<Encounter> {
-    return this.http.get<Encounter>(this.encounterUrl + id);
+    return this.http.get<Encounter>(`${this.encounterUrl}/${id}`);
   }
 
   addEncounter(encounter: Encounter): Observable<Encounter> {
     return this.http.post<Encounter>(this.encounterUrl, encounter);
-  }
-
-  deleteEncounter(id: string): Observable<any> {
-    return this.http.delete(this.encounterUrl + id);
   }
 
   createEncounter(encounter: Omit<Encounter, 'id'>): Observable<Encounter> {
@@ -100,11 +105,17 @@ export class DataService {
   }
 
   updateEncounter(encounter: Encounter): Observable<Encounter> {
-    return this.http.put<Encounter>(this.encounterUrl + encounter.id, encounter);
+    return this.http.put<Encounter>(`${this.encounterUrl}/${encounter.id}`, encounter);
   }
 
+  deleteEncounter(id: string): Observable<any> {
+    return this.http.delete(`${this.encounterUrl}/${id}`);
+  }
+
+  // =========================
   // MEDICATION
-  private medicationUrl = "http://localhost:8080/api/medication";
+  // =========================
+  private readonly medicationUrl = `${this.baseUrl}/medication`;
 
   getMedications(): Observable<Medication[]> {
     return this.http.get<Medication[]>(this.medicationUrl);
