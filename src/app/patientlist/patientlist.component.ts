@@ -9,8 +9,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-patientlist',
   imports: [CommonModule, PatientdetailsComponent, FormsModule],
   templateUrl: './patientlist.component.html',
-  styleUrl: './patientlist.component.scss',
-  standalone: true
+  styleUrls: ['./patientlist.component.scss'],
 })
 export class PatientlistComponent implements OnInit {
   public patients: Patient[] = [];

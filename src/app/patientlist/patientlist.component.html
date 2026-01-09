@@ -11,6 +11,8 @@
         <option value="">Alle</option>
         <option value="male">Male</option>
         <option value="female">Female</option>
+        <option value="other">Other</option>
+        <option value="unknown">Unknown</option>
       </select>
     </div>
     <div class="col-md-2">
@@ -24,14 +26,12 @@
       <input class="form-control" [(ngModel)]="searchParams._page" placeholder="Seite" />
     </div>
     <div class="col-md-3">
-      <button class="btn btn-primary w-100" (click)="searchPatients()">
-        🔍 Suchen
-      </button>
+      <button class="btn btn-primary w-100" (click)="searchPatients()">🔍 Suchen</button>
     </div>
   </div>
 </div>
 
-<!--- DEINE BESTEHENDE TABELLE --->
+<!--- TABELLE --->
 <table class="table">
   <thead>
     <tr>
@@ -45,15 +45,15 @@
   <tbody>
     <tr *ngFor="let p of patients" (click)="onSelect(p)" style="cursor: pointer;">
       <td>{{ p.id }}</td>
-      <td>{{ p.name?.[0]?.text || '-' }}</td>
+      <td>{{ p.name && p.name.length > 0 ? p.name[0].text : '-' }}</td>
       <td>{{ p.gender }}</td>
-      <td>{{ p.birthDate | date: 'yyyy-MM-dd' }}</td>
+      <td>{{ p.birthDate ? (p.birthDate | date: 'yyyy-MM-dd') : '-' }}</td>
       <td>{{ p.active ? 'Yes' : 'No' }}</td>
     </tr>
   </tbody>
 </table>
 
-<!--- PAGINATION (KORRIGIERT) ok--->
+<!--- PAGINATION --->
 <div class="pagination mt-4 p-3 border rounded bg-light text-center">
   <div class="row align-items-center">
     <div class="col-md-6">
@@ -65,7 +65,7 @@
         ← Vorherige
       </button>
       <button class="btn btn-primary" (click)="nextPage()" [disabled]="patients.length === 0">
-        Nächste →
+        Nächste → 
       </button>
     </div>
   </div>
