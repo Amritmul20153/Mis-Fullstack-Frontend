@@ -1,0 +1,27 @@
+export class PLF1 {
+  constructor(
+   
+    public id: string = '',
+    public resourceType: string = 'PLF1',
+    public identifier: Identifier[] = [],
+    public u: string ='',
+    public vs: string ='',
+    public vdt: string ='',
+   
+  ) {}
+}
+
+  export class rTr {
+  constructor(
+    public des: string ='',
+    public supp: 
+    
+  ) {}
+  }
+
+  export enum supp {
+  create = "create",
+  update = "update",
+  delete = "delete",
+  
+}
